@@ -1,0 +1,175 @@
+swagger: '2.0'
+info:
+  title: Booking API
+  description: API for managing user availability and bookings
+  version: v1
+host: localhost:8000
+schemes:
+- http
+basePath: /api
+consumes:
+- application/json
+produces:
+- application/json
+securityDefinitions:
+  Basic:
+    type: basic
+security:
+- Basic: []
+paths:
+  /availability/:
+    get:
+      operationId: availability_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Availability'
+      tags:
+      - availability
+    post:
+      operationId: availability_create
+      description: ''
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Availability'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Availability'
+      tags:
+      - availability
+    parameters: []
+  /availability/{id}/:
+    get:
+      operationId: availability_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Availability'
+      tags:
+      - availability
+    parameters:
+    - name: id
+      in: path
+      description: A unique integer value identifying this availability.
+      required: true
+      type: integer
+  /booking/:
+    get:
+      operationId: booking_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Booking'
+      tags:
+      - booking
+    post:
+      operationId: booking_create
+      description: ''
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Booking'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Booking'
+      tags:
+      - booking
+    parameters: []
+  /booking/{id}/:
+    get:
+      operationId: booking_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Booking'
+      tags:
+      - booking
+    parameters:
+    - name: id
+      in: path
+      description: A unique integer value identifying this booking.
+      required: true
+      type: integer
+definitions:
+  Availability:
+    required:
+    - user
+    - day_of_week
+    - start_time
+    - end_time
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      user:
+        title: User
+        type: integer
+      day_of_week:
+        title: Day of week
+        type: integer
+        enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+      start_time:
+        title: Start time
+        type: string
+      end_time:
+        title: End time
+        type: string
+  Booking:
+    required:
+    - user
+    - date
+    - start_time
+    - end_time
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      user:
+        title: User
+        type: integer
+      date:
+        title: Date
+        type: string
+        format: date
+      start_time:
+        title: Start time
+        type: string
+      end_time:
+        title: End time
+        type: string

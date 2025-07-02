@@ -1,0 +1,6 @@
+.venv
+.idea
+db.sqlite3
+scheduler/__pycache__/*
+scheduler/migrations/*
+booking_api/__pycache__/*
