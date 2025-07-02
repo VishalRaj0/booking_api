@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# booking_api
-A scheduler and booking api application made using Django.
-=======
 # Booking API
 
 This Django project provides a booking API with the following features:
@@ -41,4 +37,4 @@ Access the API:
 - Swagger UI: http://localhost:8000/swagger/
 - Availability endpoint: http://localhost:8000/api/availability/
 - Booking endpoint: http://localhost:8000/api/booking/
->>>>>>> 467b797 (added-booking-and-scheduler-apis)
+
