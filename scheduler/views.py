@@ -11,5 +11,5 @@ class AvailabilityViewSet(viewsets.ModelViewSet):
 class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
-    permission_classes = [permissions.AllowAny]  # public access
-    http_method_names = ['get', 'post']         # only allow GET and POST
+    permission_classes = [permissions.AllowAny]
+    http_method_names = ['get', 'post']
