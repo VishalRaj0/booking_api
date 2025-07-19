@@ -11,6 +11,23 @@ class AvailabilitySerializer(serializers.ModelSerializer):
     def validate(self, data):
         if data['start_time'] >= data['end_time']:
             raise serializers.ValidationError("start_time must be before end_time")
+
+        user = data['user']
+        start_time = data['start_time']
+        end_time = data['end_time']
+
+        # select * from table where start_time is between start_time and end_time
+        availabilities = Availability.objects.filter(
+            user=user,
+            day_of_week=data['day_of_week'],
+        ).exclude(id=self.instance.id if self.instance else None)
+
+        for slot in availabilities:
+            if not (end_time <= slot.start_time or start_time >= slot.end_time):
+                raise serializers.ValidationError(
+                    f"Availability overlaps with existing slot: {slot.start_time} - {slot.end_time}"
+                )
+
         return data
 
 class BookingSerializer(serializers.ModelSerializer):
@@ -32,8 +49,8 @@ class BookingSerializer(serializers.ModelSerializer):
         overlapping = Booking.objects.filter(
             user=user,
             date=date,
-            start_time__lt=end_time,
-            end_time__gt=start_time
+            start_time=end_time,
+            end_time=start_time
         )
         if overlapping.exists():
             raise serializers.ValidationError("Booking overlaps with an existing booking")
@@ -42,8 +59,8 @@ class BookingSerializer(serializers.ModelSerializer):
         matches = Availability.objects.filter(
             user=user,
             day_of_week=weekday,
-            start_time__lte=start_time,
-            end_time__gte=end_time
+            start_time=start_time,
+            end_time=end_time
         )
         if not matches.exists():
             raise serializers.ValidationError("Booking time is outside of user availability")

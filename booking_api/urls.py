@@ -27,7 +27,7 @@ schema_view = get_schema_view(
         description="API for managing user availability and bookings",
     ),
     public=True,
-    permission_classes=(permissions.AllowAny,),
+    permission_classes=[permissions.AllowAny],
 )
 
 urlpatterns = [

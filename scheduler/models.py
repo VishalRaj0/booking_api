@@ -23,7 +23,7 @@ class Availability(models.Model):
         verbose_name_plural = "Availabilities"
 
     def __str__(self):
-        return f"{self.user} available on {self.get_day_of_week_display()} from {self.start_time} to {self.end_time}"
+        return f"{self.user} available on {self.day_of_week } from {self.start_time} to {self.end_time}"
 
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
